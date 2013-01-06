@@ -1,0 +1,15 @@
+The instalation of twig.el is very simple.
+
+1. Make sure twig.el is in your load-path (stick it in .emacs.d or whatnot)
+
+2. (require 'twig) in your .emacs
+
+3. Asociate the twig files with the minor mode
+
+(setq auto-mode-alist
+      (append '(("\\.twig?$" . twig-minor-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.twig$" . twig-minor-mode))
+
+Thats is all
+
+You can view the atual functions of the library in HOWTO doc in the repository.
