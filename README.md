@@ -6,9 +6,11 @@ If your are interested in contributing in the file, you're free to send a pull r
 
 After that, just 
 
-`(require 'twig)` 
+```lisp
+(require 'twig)
+``` 
 
-```elisp
+```lisp
 (setq auto-mode-alist
       (append '(("\\.twig?$" . twig-minor-mode)) auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.twig$" . twig-minor-mode))
