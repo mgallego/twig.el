@@ -8,9 +8,11 @@ After that, just
 
 `(require 'twig)` 
 
-`(setq auto-mode-alist
+```elisp
+(setq auto-mode-alist
       (append '(("\\.twig?$" . twig-minor-mode)) auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.twig$" . twig-minor-mode))
-`
+```
+
 in your .emacs, and you're good to go.
 
