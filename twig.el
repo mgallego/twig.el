@@ -51,6 +51,7 @@
     )
   (insert (concat "{% endfor %}"))
   (goto-char point-to-insert)
+  (indent-according-to-mode)
 )
 
 (defun twig-insert-variable (var-name)
@@ -90,6 +91,7 @@
     )
   (insert (concat "{% endfif %}"))
   (goto-char point-to-insert)
+  (indent-according-to-mode)
 )
 
 
