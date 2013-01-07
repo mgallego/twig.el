@@ -31,19 +31,24 @@
   (previous-line)
 )
 
-(defun twig-for (variable in-variable)
+(defun twig-for (variable in-variable create-else)
   "create-a-for-block"
   (interactive 
    (list
     (read-string "Variable:")
     (read-string "In variable:")
+    (y-or-n-p "Create else statement?")
     ))
   (insert (concat "{% for " variable " in " in-variable " %}"))
   (newline)
   (setq point-to-insert (point))
   (newline)
-  (insert "{% else %}")
-  (newline)
+  (if create-else 
+      (progn
+	(insert "{% else %}")
+	(newline)
+     )
+    )
   (insert (concat "{% endfor %}"))
   (goto-char point-to-insert)
 )
