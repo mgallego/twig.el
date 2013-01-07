@@ -62,6 +62,37 @@
   (insert (concat "{{ " var-name " }}"))
 )
 
+(defun twig-insert-function (function-name)
+  "insert-a-function"
+  (interactive
+   (list 
+   (read-string "Function:")
+    ))
+  (insert (concat "{% " function-name " %}"))
+)
+
+(defun twig-insert-condition (condition-param create-else)
+  "insert-a-condition"
+  (interactive
+   (list 
+   (read-string "Condition:")
+   (y-or-n-p "Insert else statement?")
+    ))
+  (insert (concat "{% if " condition-param " %}"))
+  (newline)
+  (setq point-to-insert (point))
+  (newline)
+  (if create-else 
+      (progn
+	(insert "{% else %}")
+	(newline)
+     )
+    )
+  (insert (concat "{% endfif %}"))
+  (goto-char point-to-insert)
+)
+
+
 (defvar twig-mode-keymap (make-keymap)
   "keymappings for twig-mode"
 )
@@ -90,6 +121,43 @@
   (kbd "C-c C-t v")
   'twig-insert-variable
 )
+
+(define-key twig-mode-keymap
+  (kbd "C-c C-t x")
+  'twig-insert-function
+)
+
+(define-key twig-mode-keymap
+  (kbd "C-c C-t i")
+  'twig-insert-condition
+)
+
+;;Make a menu
+(define-key twig-mode-keymap [menu-bar] (make-sparse-keymap))
+(define-key twig-mode-keymap [menu-bar twig]
+  (cons "Twig" (make-sparse-keymap "Twig")))
+
+;; Define specific subcommands in this menu.
+(define-key twig-mode-keymap [menu-bar twig trans-text]
+  '("Insert Translate Block" . twig-trans-text))
+
+(define-key twig-mode-keymap [menu-bar twig trans-region]
+  '("Translate Region" . twig-trans-region))
+
+(define-key twig-mode-keymap [menu-bar twig create-block]
+  '("Create A New Block" . twig-create-block))
+
+(define-key twig-mode-keymap [menu-bar twig for]
+  '("Insert For Loop" . twig-for))
+
+(define-key twig-mode-keymap [menu-bar twig insert-variable]
+  '("Insert Variable" . twig-insert-variable))
+
+(define-key twig-mode-keymap [menu-bar twig insert-function]
+  '("Insert Function" . twig-insert-function))
+
+(define-key twig-mode-keymap [menu-bar twig insert-condition]
+  '("Insert Condition" . twig-insert-condition))
 
 ;;;###autoload
 (define-minor-mode twig-minor-mode
