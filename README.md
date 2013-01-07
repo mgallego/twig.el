@@ -6,11 +6,15 @@ If your are interested in contributing in the file, you're free to send a pull r
 
 After that, just 
 
-`(require 'twig)` 
+```lisp
+(require 'twig)
+``` 
 
-`(setq auto-mode-alist
+```lisp
+(setq auto-mode-alist
       (append '(("\\.twig?$" . twig-minor-mode)) auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.twig$" . twig-minor-mode))
-`
+```
+
 in your .emacs, and you're good to go.
 
