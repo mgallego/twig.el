@@ -1,4 +1,4 @@
-;;;###autoload
+;;###autoload
 (defgroup twig nil
   "Convenience functions for working with Twig"
   :prefix "twig-"
@@ -94,7 +94,6 @@
   (indent-according-to-mode)
 )
 
-
 (defvar twig-mode-keymap (make-keymap)
   "keymappings for twig-mode"
 )
@@ -161,14 +160,39 @@
 (define-key twig-mode-keymap [menu-bar twig insert-condition]
   '("Insert Condition" . twig-insert-condition))
 
+
+;; (defvar twig-keywords
+;;   '(
+;;     ("{% | %}" 1 font-lock-type-face)
+;;     ("title=\\|re[lv]=\\|h\\(ref=\\|ttp-equiv=\\)\\|content=\\|name=" . font-lock-variable-name-face)
+;; ;;    ("<\\(a\\)" 1 font-lock-function-name-face)
+;; ;;    ("\\(/a\\)>" 1 font-lock-function-name-face)
+;; ;;    ("\t" . 'show-paren-mismatch-face)
+;;     )
+;;   )
+
 ;;;###autoload
-(define-minor-mode twig-minor-mode
-  nil                  ;default docstring
-  nil                  ;initial value
-  "[twig]"              ;mode line indicator
-  twig-mode-keymap ;keymap
+;; (define-derived-mode twig-mode html-mode "HTML"
+;;   (set (make-local-variable 'comment-start) "{# ")
+;;   (set (make-local-variable 'comment-end) " #}")
+;;   ;;(font-lock-add-keywords 'html-mode '(twig-keywords))
+;;   ;;(setq font-lock-defaults '(twig-keywords))
+;;   (twig-minor-mode-on)
+;; )
+
+(defvar twig-minor-mode-previous-comments nil
+  "Storage for comment start/end that was before twig mode was enabled")
+(define-minor-mode twig-minor-mode "twig" :lighter "[twig]" 
+  :keymap twig-mode-keymap		
   :group 'twig
-)
+  (unless twig-minor-mode-previous-comments
+    (set (make-local-variable 'twig-minor-mode-previous-comments) (cons comment-start comment-end)))
+  (if twig-minor-mode
+      (progn
+        (setq comment-start "{#")
+        (setq comment-end "#}"))
+    (setq comment-start (car twig-minor-mode-previous-comments))
+    (setq comment-end (cdr twig-minor-mode-previous-comments))))
 
 (defun twig-minor-mode-on ()
   (interactive)
@@ -179,6 +203,6 @@
   (interactive)
   (twig-minor-mode nil)
 )
-
+ 
 (provide 'twig)
 ;;;twig.el ends here
